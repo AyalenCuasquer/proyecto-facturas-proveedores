@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Facturas de Proveedores · AUTOREPUESTOS CARMAX</title>
+  <link rel="stylesheet" href="/app/styles.css">
+</head>
+<body>
+  <!-- Interfaz gráfica del Sistema de Gestión de Facturas de Proveedores.
+       Todo lo que se ve aquí se pide a la API (api/app.py) con fetch(); la
+       interfaz no se conecta directamente a la base de datos. -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">FP</div>
+      <div>
+        <div class="brand-title">Facturas de Proveedores</div>
+        <div class="brand-sub">AUTOREPUESTOS CARMAX</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#/resumen" data-view="resumen">Resumen</a>
+      <a href="#/proveedores" data-view="proveedores">Proveedores</a>
+      <a href="#/facturas" data-view="facturas">Facturas</a>
+      <a href="#/productos" data-view="productos">Productos</a>
+      <a href="#/reportes" data-view="reportes">Reportes</a>
+    </nav>
+    <div class="api-status" id="api-status">
+      <span class="dot"></span><span id="api-status-text">Conectando con la API…</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <h1 id="view-title">Resumen</h1>
+      <div class="topbar-actions" id="view-actions"></div>
+    </header>
+    <section class="content" id="content"></section>
+  </main>
+
+  <div class="modal-backdrop" id="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <h2 id="modal-title"></h2>
+        <button class="icon-btn" id="modal-close" aria-label="Cerrar">×</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="/app/app.js"></script>
+</body>
+</html>

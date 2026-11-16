@@ -1,0 +1,32 @@
+# MySQL 8 en Docker para el Sistema de Gestión de Facturas de Proveedores
+#
+#   Encender :  docker compose up -d
+#   Apagar   :  docker compose down
+#   Borrar TODO y volver a crear la base desde cero:
+#               docker compose down -v      (luego: docker compose up -d)
+#
+# Puerto 3309 en la PC (3306, 3307 y 3308 ya los usan XAMPP y los otros contenedores).
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-facturas
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_DATABASE: invoice_db
+    command:
+      - --event-scheduler=ON              # necesario para evt_mark_overdue_invoices
+      - --default-time-zone=-05:00        # hora de Ecuador
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3309:3306"
+    volumes:
+      # Los .sql de la carpeta db se ejecutan (en orden) la primera vez
+      - ./db:/docker-entrypoint-initdb.d:ro
+      # Aquí se guardan los datos para que no se pierdan al apagar
+      - facturas_data:/var/lib/mysql
+
+volumes:
+  facturas_data:
